@@ -1,8 +1,0 @@
-{
-  "recommendations": [
-    "dbaeumer.vscode-eslint",
-    "flowtype.flow-for-vscode",
-    "esbenp.prettier-vscode",
-    "ms-vscode.node-debug2"
-  ]
-}
