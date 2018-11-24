@@ -1,5 +1,4 @@
-[![CircleCI](https://circleci.com/gh/ayildirim/bio2.svg?style=svg)](https://circleci.com/gh/ayildirim/bio2)
-[![StackShare](https://img.shields.io/badge/tech-stack-0690fa.svg?style=flat)](https://stackshare.io/ayildirim/portfolio-page)
+[![CircleCI](https://circleci.com/gh/ayildirim/notepad.svg?style=svg)](https://circleci.com/gh/ayildirim/notepad)
 
 ### Development environment
 - Visual Studio Code is the configured tool for the project
