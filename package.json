@@ -1,74 +1,25 @@
 {
-  "name": "bio",
-  "homepage": "http://notepad.ahmet.se/",
-  "version": "0.1.0",
+  "name": "root",
   "private": true,
-  "dependencies": {
-    "bootstrap": "^4.1.3",
-    "moment": "^2.22.2",
-    "node-sass": "^4.9.4",
-    "react": "^16.4.2",
-    "react-bootstrap": "^1.0.0-beta.2",
-    "react-dom": "^16.4.2",
-    "react-ga": "^2.5.3",
-    "react-router-dom": "^4.3.1",
-    "react-scripts": "2.0.3",
-    "react-with-analytics": "^0.0.5"
-  },
-  "parser": "babel-eslint",
-  "rules": {
-    "strict": 0
+  "devDependencies": {
+    "flow-bin": "^0.79.1",
+    "husky": "^0.14.3",
+    "lerna": "^3.4.3"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "lint": "eslint src",
-    "flow": "flow",
-    "precommit": "lint-staged",
-    "format": "prettier-eslint --write \"src/**/*.js\""
+    "bootstrap": "lerna bootstrap",
+    "test": "lerna run test",
+    "clean": "lerna clean",
+    "ls": "lerna ls"
   },
-  "jest": {
-    "collectCoverageFrom": [
-      "src/**/*.{js,jsx}"
-    ],
-    "coverageThreshold": {
-      "global": {
-        "branches": 90,
-        "functions": 90,
-        "lines": 90,
-        "statements": 90
-      }
-    },
-    "coverageReporters": [
-      "text"
+  "workspaces": {
+    "packages": [
+      "packages/*"
     ]
   },
-  "lint-staged": {
-    "src/**/*.js": [
-      "yarn format",
-      "git add"
-    ]
-  },
-  "devDependencies": {
-    "eslint-config-airbnb": "^17.1.0",
-    "eslint-plugin-flowtype": "^3.2.0",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-jsx-a11y": "^6.1.1",
-    "eslint-plugin-react": "^7.11.1",
-    "flow-bin": "^0.79.1",
-    "gh-pages": "^1.2.0",
-    "husky": "^0.14.3",
-    "lint-staged": "^7.2.2",
-    "prettier": "^1.14.2",
-    "prettier-eslint": "^8.8.1",
-    "prettier-eslint-cli": "^4.7.1"
-  },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn test"
+    }
+  }
 }

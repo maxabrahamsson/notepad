@@ -40,9 +40,16 @@ jobs:
               git rm -rf .
               cd ..
               CI=false
-              yarn build
+              yarn bootstrap
 
-              cp -a build/. out/.
+              cd packages/frontend/
+              yarn build
+              cp -a build/. ../../out/.
+
+              cd ../../
+
+              mkdir out/server
+              cp -a packages/backend/. out/server/.
 
               mkdir -p out/.circleci && cp -a .circleci/. out/.circleci/.
               cd out
