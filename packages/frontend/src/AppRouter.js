@@ -8,9 +8,8 @@ import withTracker from './withTracker';
 
 // Pages
 import Main from './Pages/Main';
-import SingleNote from './Pages/SingleNote';
 
-const Pages = [{ component: Main, link: 'Home' }, { component: SingleNote, link: 'SingleNote' }];
+const Pages = [{ component: Main, link: 'Home' }];
 
 const camelize = function camelize(str) {
   return str.replace(/\W+(.)/g, (match, chr) => chr.toUpperCase());
@@ -30,13 +29,6 @@ class AppRouter extends Component {
         <div>
           <Navbar bg="light" expand="lg">
             <Navbar.Brand href="/#/home">Notepad</Navbar.Brand>
-            <Navbar.Collapse id="basic-navbar-nav">
-              <Nav className="mr-auto">
-                {Pages.map(page => (
-                  <Nav.Link href={`/#/${camelize(page.link)}`}>{page.link}</Nav.Link>
-                ))}
-              </Nav>
-            </Navbar.Collapse>
             <Alert key="info" variant="info">
               {'Under construction - '}
               <ReactGA.OutboundLink
