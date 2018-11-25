@@ -1,14 +1,14 @@
 // /backend/data.js
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
-const Schema = mongoose.Schema;
+const { Schema } = mongoose;
 
 // this will be our data base's data structure
 const DataSchema = new Schema(
   {
-    message: String
+    message: String,
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
-module.exports = mongoose.model("Data", DataSchema);
+module.exports = mongoose.model('Data', DataSchema);
