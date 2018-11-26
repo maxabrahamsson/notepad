@@ -2,6 +2,7 @@
   "name": "root",
   "private": true,
   "devDependencies": {
+    "concurrently": "^4.1.0",
     "flow-bin": "^0.79.1",
     "husky": "^0.14.3",
     "lerna": "^3.4.3"
@@ -10,7 +11,10 @@
     "bootstrap": "lerna bootstrap",
     "test": "lerna run test",
     "clean": "lerna clean",
-    "ls": "lerna ls"
+    "ls": "lerna ls",
+    "frontend": "cd ./packages/frontend && yarn start",
+    "backend": "cd ./packages/backend && yarn start",
+    "start": "concurrently \"yarn backend\" \"yarn frontend\" --kill-others"
   },
   "workspaces": {
     "packages": [
