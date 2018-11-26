@@ -26,6 +26,14 @@ db.once('open', () => console.log('connected to the database'));
 // checks if connection with the database is successful
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
+// Allow all CORS requests
+app.all('*', (req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  next();
+});
+
 // (optional) only made for logging and
 // bodyParser, parses the request body to be a readable json format
 app.use(bodyParser.urlencoded({ extended: false }));
