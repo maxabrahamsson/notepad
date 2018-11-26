@@ -3,10 +3,10 @@ import axios from 'axios';
 import Container from 'react-bootstrap/lib/Container';
 import Button from 'react-bootstrap/lib/Button';
 import Card from 'react-bootstrap/lib/Card';
-import CardColumns from 'react-bootstrap/lib/CardColumns';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 import Form from 'react-bootstrap/lib/Form';
+import { API_URL } from '../Config';
 
 class Main extends Component {
   // initialize our state
@@ -87,20 +87,20 @@ class Main extends Component {
   }
 
   getDataFromDb = () => {
-    fetch('/api/getData')
+    fetch(`${API_URL}/api/getData`)
       .then(data => data.json())
       .then(res => this.setState({ data: res.data }));
   };
 
   putDataToDB = (message) => {
-    axios.post('/api/putData', {
+    axios.post(`${API_URL}/api/putData`, {
       message,
     });
     this.refreshUI();
   };
 
   deleteFromDB = (idTodelete) => {
-    axios.delete('/api/deleteData', {
+    axios.delete(`${API_URL}/api/deleteData`, {
       data: {
         _id: idTodelete,
       },
@@ -109,7 +109,7 @@ class Main extends Component {
   };
 
   updateDB = (idToUpdate, updateToApply) => {
-    axios.post('/api/updateData', {
+    axios.post(`${API_URL}/api/updateData`, {
       id: idToUpdate,
       update: { message: updateToApply },
     });
