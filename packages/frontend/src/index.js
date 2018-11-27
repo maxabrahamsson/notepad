@@ -1,9 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './App.scss';
-import App from './App';
+import ReactGA from 'react-ga';
+
+import App from './components/App';
 import registerServiceWorker from './registerServiceWorker';
 import 'bootstrap/dist/css/bootstrap.css';
+import Firebase, { FirebaseContext } from './components/Firebase';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactGA.initialize('UA-129029377-1', { testMode: process.env.NODE_ENV === 'test' });
+
+ReactDOM.render(
+  <FirebaseContext.Provider value={new Firebase()}>
+    <App />
+  </FirebaseContext.Provider>,
+  document.getElementById('root'),
+);
 registerServiceWorker();
