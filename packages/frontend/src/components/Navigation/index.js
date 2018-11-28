@@ -31,15 +31,15 @@ const Navigation = () => (
 );
 const NavigationAuth = ({ authUser }) => (
   <Nav className="mr-auto">
-    <Nav.Link href={ROUTES.NOTES}>Notes</Nav.Link>
-    <Nav.Link href={ROUTES.ACCOUNT}>Account</Nav.Link>
+    <Nav.Link href={`/#${ROUTES.NOTES}`}>Notes</Nav.Link>
+    <Nav.Link href={`/#${ROUTES.ACCOUNT}`}>Account</Nav.Link>
     <SignOutButton />
   </Nav>
 );
 
 const NavigationNonAuth = () => (
   <Nav className="mr-auto">
-    <Nav.Link href={ROUTES.SIGN_IN}>Sign in</Nav.Link>
+    <Nav.Link href={`/#${ROUTES.SIGN_IN}`}>Sign in</Nav.Link>
   </Nav>
 );
 
