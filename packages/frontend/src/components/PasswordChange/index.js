@@ -15,7 +15,7 @@ class PasswordChangeForm extends Component {
     this.state = { ...INITIAL_STATE };
   }
 
-  onSubmit = event => {
+  onSubmit = (event) => {
     const { passwordOne } = this.state;
 
     this.props.firebase
@@ -23,22 +23,21 @@ class PasswordChangeForm extends Component {
       .then(() => {
         this.setState({ ...INITIAL_STATE });
       })
-      .catch(error => {
+      .catch((error) => {
         this.setState({ error });
       });
 
     event.preventDefault();
   };
 
-  onChange = event => {
+  onChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   };
 
   render() {
     const { passwordOne, passwordTwo, error } = this.state;
 
-    const isInvalid =
-      passwordOne !== passwordTwo || passwordOne === '';
+    const isInvalid = passwordOne !== passwordTwo || passwordOne === '';
 
     return (
       <form onSubmit={this.onSubmit}>

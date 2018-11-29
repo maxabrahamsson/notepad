@@ -25,8 +25,7 @@ const INITIAL_STATE = {
   error: null,
 };
 
-const ERROR_CODE_ACCOUNT_EXISTS =
-  'auth/account-exists-with-different-credential';
+const ERROR_CODE_ACCOUNT_EXISTS = 'auth/account-exists-with-different-credential';
 
 const ERROR_MSG_ACCOUNT_EXISTS = `
   An account with an E-Mail address to
@@ -42,7 +41,7 @@ class SignInFormBase extends Component {
     this.state = { ...INITIAL_STATE };
   }
 
-  onSubmit = event => {
+  onSubmit = (event) => {
     const { email, password } = this.state;
 
     this.props.firebase
@@ -51,14 +50,14 @@ class SignInFormBase extends Component {
         this.setState({ ...INITIAL_STATE });
         this.props.history.push(ROUTES.NOTES);
       })
-      .catch(error => {
+      .catch((error) => {
         this.setState({ error });
       });
 
     event.preventDefault();
   };
 
-  onChange = event => {
+  onChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   };
 
@@ -100,26 +99,26 @@ class SignInGoogleBase extends Component {
     this.state = { error: null };
   }
 
-  onSubmit = event => {
+  onSubmit = (event) => {
     this.props.firebase
       .doSignInWithGoogle()
-      .then(socialAuthUser => {
+      .then((socialAuthUser) => {
         // Create a user in your Firebase Realtime Database too
         this.props.firebase
           .user(socialAuthUser.user.uid)
           .set({
             username: socialAuthUser.user.displayName,
-            email: socialAuthUser.user.email
+            email: socialAuthUser.user.email,
           })
           .then(() => {
             this.setState({ error: null });
             this.props.history.push(ROUTES.NOTES);
           })
-          .catch(error => {
+          .catch((error) => {
             this.setState({ error });
           });
       })
-      .catch(error => {
+      .catch((error) => {
         if (error.code === ERROR_CODE_ACCOUNT_EXISTS) {
           error.message = ERROR_MSG_ACCOUNT_EXISTS;
         }
@@ -150,26 +149,26 @@ class SignInFacebookBase extends Component {
     this.state = { error: null };
   }
 
-  onSubmit = event => {
+  onSubmit = (event) => {
     this.props.firebase
       .doSignInWithFacebook()
-      .then(socialAuthUser => {
+      .then((socialAuthUser) => {
         // Create a user in your Firebase Realtime Database too
         this.props.firebase
           .user(socialAuthUser.user.uid)
           .set({
             username: socialAuthUser.additionalUserInfo.profile.name,
-            email: socialAuthUser.additionalUserInfo.profile.email
+            email: socialAuthUser.additionalUserInfo.profile.email,
           })
           .then(() => {
             this.setState({ error: null });
             this.props.history.push(ROUTES.NOTES);
           })
-          .catch(error => {
+          .catch((error) => {
             this.setState({ error });
           });
       })
-      .catch(error => {
+      .catch((error) => {
         if (error.code === ERROR_CODE_ACCOUNT_EXISTS) {
           error.message = ERROR_MSG_ACCOUNT_EXISTS;
         }
@@ -200,26 +199,26 @@ class SignInTwitterBase extends Component {
     this.state = { error: null };
   }
 
-  onSubmit = event => {
+  onSubmit = (event) => {
     this.props.firebase
       .doSignInWithTwitter()
-      .then(socialAuthUser => {
+      .then((socialAuthUser) => {
         // Create a user in your Firebase Realtime Database too
         this.props.firebase
           .user(socialAuthUser.user.uid)
           .set({
             username: socialAuthUser.additionalUserInfo.profile.name,
-            email: socialAuthUser.additionalUserInfo.profile.email
+            email: socialAuthUser.additionalUserInfo.profile.email,
           })
           .then(() => {
             this.setState({ error: null });
             this.props.history.push(ROUTES.NOTES);
           })
-          .catch(error => {
+          .catch((error) => {
             this.setState({ error });
           });
       })
-      .catch(error => {
+      .catch((error) => {
         if (error.code === ERROR_CODE_ACCOUNT_EXISTS) {
           error.message = ERROR_MSG_ACCOUNT_EXISTS;
         }
@@ -265,4 +264,6 @@ const SignInTwitter = compose(
 
 export default SignInPage;
 
-export { SignInForm, SignInGoogle, SignInFacebook, SignInTwitter };
+export {
+  SignInForm, SignInGoogle, SignInFacebook, SignInTwitter,
+};
