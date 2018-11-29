@@ -4,7 +4,7 @@
 
 - Set MONGOLAB_URI environment variable with your Mongo DB credentials and path
 - Run Deploy step described in the CircleCI configuration file on your server
-- Initialize the API server using PM2: "pm2 start node -- ./server/index.js --watch"
+- Initialize the API server using PM2: "pm2 start npm -- start --watch"
 
 ### Development environment
 
