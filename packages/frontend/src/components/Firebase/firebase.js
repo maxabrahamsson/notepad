@@ -55,8 +55,9 @@ class Firebase {
 
   // *** Merge Auth and DB User API *** //
 
-  onAuthUserListener = (next, fallback) => this.auth.onAuthStateChanged((authUser) => {
+  onAuthUserListener = (next, fallback) => this.auth.onAuthStateChanged(async (authUser) => {
     if (authUser) {
+      const jwt = await authUser.getIdToken();
       this.user(authUser.uid)
         .once('value')
         .then((snapshot) => {
@@ -66,6 +67,7 @@ class Firebase {
           authUser = {
             uid: authUser.uid,
             email: authUser.email,
+            jwt,
             ...dbUser,
           };
 

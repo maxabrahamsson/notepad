@@ -7,6 +7,7 @@ const { Schema } = mongoose;
 const DataSchema = new Schema(
   {
     message: String,
+    uid: String,
   },
   { timestamps: true },
 );

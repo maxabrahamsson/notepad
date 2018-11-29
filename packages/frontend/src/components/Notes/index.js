@@ -24,7 +24,7 @@ class NotesPage extends Component {
   // it is easy to understand their functions when you
   // see them render into our screen
   render() {
-    const { data } = this.state;
+    const { data, message } = this.state;
     const { backend } = this.props;
     return (
       <AuthUserContext.Consumer>
@@ -44,9 +44,7 @@ class NotesPage extends Component {
                         />
                       </Form.Group>
                     </Card.Title>
-                    <Button onClick={() => backend.putDataToDB(this.state.message, authUser.uid)}>
-                      Save
-                    </Button>
+                    <Button onClick={() => backend.putDataToDB(message)}>Save</Button>
                   </Card.Body>
                 </Card>
               </Col>
@@ -57,10 +55,7 @@ class NotesPage extends Component {
                     <Card>
                       <Card.Body>
                         <Card.Title>{dat.message}</Card.Title>
-                        <Button
-                          variant="danger"
-                          onClick={() => backend.deleteFromDB(dat._id, authUser.uid)}
-                        >
+                        <Button variant="danger" onClick={() => backend.deleteFromDB(dat._id)}>
                             Delete
                         </Button>
                       </Card.Body>
