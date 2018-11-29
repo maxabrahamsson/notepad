@@ -3,12 +3,14 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
 const dotenv = require('dotenv');
+const admin = require('firebase-admin');
+
 const Data = require('./data');
 
 const API_PORT = 3001;
 const app = express();
 const router = express.Router();
-dotenv.config();
+dotenv.config({ path: './credentials.env' });
 
 // this is our MongoDB database
 const dbRoute = process.env.MONGOLAB_URI;
@@ -18,6 +20,18 @@ mongoose.connect(
   dbRoute,
   { useNewUrlParser: true },
 );
+admin.initializeApp({
+  credential: admin.credential.cert(process.env),
+  databaseURL: 'https://notepad-d8d76.firebaseio.com',
+});
+
+async function validateJWT(jwt) {
+  const decodedToken = await admin.auth().verifyIdToken(jwt);
+  return {
+    uuid: decodedToken.uid,
+    name: decodedToken.email,
+  };
+}
 
 const db = mongoose.connection;
 
@@ -42,8 +56,10 @@ app.use(logger('dev'));
 
 // this is our get method
 // this method fetches all available data in our database
-router.get('/getData', (req, res) => {
-  Data.find((err, data) => {
+router.post('/getData', async (req, res) => {
+  const { jwt } = req.body;
+  const decoded = await validateJWT(jwt);
+  Data.find({ uid: decoded.uuid }, (err, data) => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true, data });
   });
@@ -51,9 +67,10 @@ router.get('/getData', (req, res) => {
 
 // this is our update method
 // this method overwrites existing data in our database
-router.post('/updateData', (req, res) => {
-  const { _id, update } = req.body;
-  Data.findOneAndUpdate(_id, update, (err) => {
+router.post('/updateData', async (req, res) => {
+  const { _id, update, jwt } = req.body;
+  const decoded = await validateJWT(jwt);
+  Data.findOneAndUpdate({ _id, uid: decoded.uuid }, update, (err) => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true });
   });
@@ -61,9 +78,10 @@ router.post('/updateData', (req, res) => {
 
 // this is our delete method
 // this method removes existing data in our database
-router.delete('/deleteData', (req, res) => {
-  const { _id } = req.body;
-  Data.findOneAndDelete({ _id }, (err) => {
+router.delete('/deleteData', async (req, res) => {
+  const { _id, jwt } = req.body;
+  const decoded = await validateJWT(jwt);
+  Data.findOneAndDelete({ _id, uid: decoded.uuid }, (err) => {
     if (err) return res.send(err);
     return res.json({ success: true });
   });
@@ -71,17 +89,19 @@ router.delete('/deleteData', (req, res) => {
 
 // this is our create methid
 // this method adds new data in our database
-router.post('/putData', (req, res) => {
+router.post('/putData', async (req, res) => {
   const data = new Data();
-  const { message } = req.body;
+  const { message, jwt } = req.body;
+  const decoded = await validateJWT(jwt);
 
-  if (!message) {
+  if (!message || !jwt) {
     return res.json({
       success: false,
       error: 'INVALID INPUTS',
     });
   }
   data.message = message;
+  data.uid = decoded.uuid;
   data.save((err) => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true });
