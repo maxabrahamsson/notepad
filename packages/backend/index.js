@@ -68,9 +68,9 @@ router.post('/getData', async (req, res) => {
 // this is our update method
 // this method overwrites existing data in our database
 router.post('/updateData', async (req, res) => {
-  const { _id, update, jwt } = req.body;
+  const { id, update, jwt } = req.body;
   const decoded = await validateJWT(jwt);
-  Data.findOneAndUpdate({ _id, uid: decoded.uuid }, update, (err) => {
+  Data.findOneAndUpdate({ _id: id, uid: decoded.uuid }, update, (err) => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true });
   });

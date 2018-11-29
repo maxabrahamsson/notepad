@@ -16,15 +16,25 @@ class NotesPage extends Component {
 
     this.state = {
       data: [],
-      message: null,
+      message: '',
+      messageIdToUpdate: null,
     };
   }
 
-  // here is our UI
-  // it is easy to understand their functions when you
-  // see them render into our screen
+  async recordText() {
+    const { message, messageIdToUpdate } = this.state;
+    const { backend } = this.props;
+    if (messageIdToUpdate === null) {
+      await backend.putDataToDB(message);
+    } else {
+      await backend.updateDB(messageIdToUpdate, message);
+    }
+    this.setState({ messageIdToUpdate: null, message: '' });
+    this.refreshUI();
+  }
+
   render() {
-    const { data, message } = this.state;
+    const { data, message, messageIdToUpdate } = this.state;
     const { backend } = this.props;
     return (
       <AuthUserContext.Consumer>
@@ -40,11 +50,18 @@ class NotesPage extends Component {
                           as="textarea"
                           rows="3"
                           onChange={e => this.setState({ message: e.target.value })}
-                          placeholder="add something in the database"
+                          placeholder="Write a note"
+                          value={message}
                         />
                       </Form.Group>
                     </Card.Title>
-                    <Button onClick={() => backend.putDataToDB(message)}>Save</Button>
+                    <Button
+                      onClick={() => {
+                        this.recordText();
+                      }}
+                    >
+                      {messageIdToUpdate === null ? 'Add' : 'Save'}
+                    </Button>
                   </Card.Body>
                 </Card>
               </Col>
@@ -55,8 +72,21 @@ class NotesPage extends Component {
                     <Card>
                       <Card.Body>
                         <Card.Title>{dat.message}</Card.Title>
-                        <Button variant="danger" onClick={() => backend.deleteFromDB(dat._id)}>
+                        <Button
+                          variant="danger"
+                          onClick={() => {
+                            backend.deleteFromDB(dat._id);
+                            this.refreshUI();
+                          }}
+                        >
                             Delete
+                        </Button>
+                        <Button
+                          variant="info"
+                          onClick={() => this.setState({ messageIdToUpdate: dat._id, message: dat.message })
+                            }
+                        >
+                            Edit
                         </Button>
                       </Card.Body>
                     </Card>
