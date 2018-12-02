@@ -1,4 +1,12 @@
-[![CircleCI](https://circleci.com/gh/ayildirim/notepad.svg?style=svg)](https://circleci.com/gh/ayildirim/notepad)
+
+#### Backend : 
+- [![David-DM](https://david-dm.org/ayildirim/notepad.svg?path=packages%2Fbackend)](https://david-dm.org/ayildirim/notepad?path=packages%2Fbackend)
+- [![David-DM](https://david-dm.org/ayildirim/notepad.svg?path=packages%2Fbackend&type=dev)](https://david-dm.org/ayildirim/notepad?path=packages%2Fbackend&type=dev)
+#### Frontend : 
+- [![CircleCI](https://circleci.com/gh/ayildirim/notepad.svg?style=svg)](https://circleci.com/gh/ayildirim/notepad)
+- [![David-DM](https://david-dm.org/ayildirim/notepad.svg?path=packages%2Ffrontend)](https://david-dm.org/ayildirim/notepad?path=packages%2Ffrontend)
+- [![David-DM](https://david-dm.org/ayildirim/notepad.svg?path=packages%2Ffrontend&type=dev)](https://david-dm.org/ayildirim/notepad?path=packages%2Ffrontend&type=dev)
+
 
 ### Deployment
 
