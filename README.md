@@ -3,7 +3,6 @@ Backend : [![David-DM](https://david-dm.org/ayildirim/notepad/status.svg?path=pa
 Frontend : [![CircleCI](https://circleci.com/gh/ayildirim/notepad.svg?style=svg)](https://circleci.com/gh/ayildirim/notepad) 
 [![David-DM](https://david-dm.org/ayildirim/notepad/status.svg?path=packages%2Ffrontend)](https://david-dm.org/ayildirim/notepad?path=packages%2Ffrontend) [![David-DM](https://david-dm.org/ayildirim/notepad/dev-status.svg?path=packages%2Ffrontend&type=dev)](https://david-dm.org/ayildirim/notepad?path=packages%2Ffrontend&type=dev)
 
-
 ### Deployment
 
 - Set MONGOLAB_URI environment variable with your Mongo DB credentials and path
