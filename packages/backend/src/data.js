@@ -12,4 +12,4 @@ const DataSchema = new Schema(
   { timestamps: true },
 );
 
-module.exports = mongoose.model('Data', DataSchema);
+export const Data = mongoose.model('Data', DataSchema);

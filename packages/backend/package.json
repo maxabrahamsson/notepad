@@ -1,5 +1,5 @@
 {
-  "name": "backend",
+  "name": "@notepad/backend",
   "version": "1.0.0",
   "main": "index.js",
   "repository": "http://github.com/ayildirim/notepad",
@@ -12,13 +12,23 @@
     "firebase-admin": "^6.3.0",
     "mongoose": "^5.3.13",
     "mongoose-auto-increment-reworked": "^1.2.1",
-    "morgan": "^1.9.1"
+    "morgan": "^1.9.1",
+    "swagger-express-mw": "^0.7.0"
   },
   "scripts": {
-    "start": "node index.js",
-    "test": "eslint ."
+    "build-start": "yarn build && yarn start",
+    "start": "node lib/index.js",
+    "test": "eslint .",
+    "build": "yarn build-flow-types && babel -d lib/ src/ --copy-files",
+    "build-flow-types": "swagger-to-flowtype src/api/swagger/swagger.yaml"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^8.2.1",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "eslint": "^4.17.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-flowtype": "^3.2.0",
     "eslint-plugin-import": "^2.14.0",
@@ -29,6 +39,7 @@
     "lint-staged": "^7.2.2",
     "prettier": "^1.14.2",
     "prettier-eslint": "^8.8.1",
-    "prettier-eslint-cli": "^4.7.1"
+    "prettier-eslint-cli": "^4.7.1",
+    "swagger-to-flowtype": "^0.0.11"
   }
 }
