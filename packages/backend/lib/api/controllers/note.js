@@ -9,7 +9,7 @@ let getNotes = exports.getNotes = (() => {
   var _ref = _asyncToGenerator(function* (req, res) {
     const { userId } = req.swagger.params;
     _index.dbConnection.find({ uid: userId }, function (err, data) {
-      if (err) return res.json({ success: false, error: err });
+      if (err) return res.json({ result: false, error: err });
       return res.json(data);
     });
   });
@@ -21,11 +21,14 @@ let getNotes = exports.getNotes = (() => {
 
 let updateNote = exports.updateNote = (() => {
   var _ref2 = _asyncToGenerator(function* (req, res) {
-    const { id, update } = req.body;
+    const { id, message } = req.body;
     const { userId } = req.swagger.params;
-    _index.dbConnection.findOneAndUpdate({ _id: id, uid: userId }, update, function (err) {
-      if (err) return res.json({ success: false, error: err });
-      return res.json({ success: true });
+    console.log(id);
+    console.log(message);
+    console.log(userId);
+    _index.dbConnection.findOneAndUpdate({ _id: id, uid: userId }, { message }, function (err) {
+      if (err) return res.json({ result: false, error: err });
+      return res.json({ result: true });
     });
   });
 
@@ -36,11 +39,11 @@ let updateNote = exports.updateNote = (() => {
 
 let deleteNote = exports.deleteNote = (() => {
   var _ref3 = _asyncToGenerator(function* (req, res) {
-    const { id } = req.body;
+    const noteId = req.swagger.params.noteId.value;
     const { userId } = req.swagger.params;
-    _index.dbConnection.findOneAndDelete({ _id: id, uid: userId }, function (err) {
+    _index.dbConnection.findOneAndDelete({ _id: noteId, uid: userId }, function (err) {
       if (err) return res.send(err);
-      return res.json({ success: true });
+      return res.json({ result: true });
     });
   });
 
@@ -57,15 +60,15 @@ let addNote = exports.addNote = (() => {
 
     if (!message) {
       return res.json({
-        success: false,
+        result: false,
         error: 'INVALID INPUTS'
       });
     }
     data.message = message;
     data.uid = userId;
     data.save(function (err) {
-      if (err) return res.json({ success: false, error: err });
-      return res.json({ success: true });
+      if (err) return res.json({ result: false, error: err });
+      return res.json({ result: true });
     });
   });
 

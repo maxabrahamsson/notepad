@@ -27,16 +27,14 @@ export default function withBackend(WrappedComponent) {
     };
 
     deleteFromDB = async (id) => {
-      const res = await this.API.delete('', {
-        id,
-      });
+      const res = await this.API.delete(`/${id}`);
       return res;
     };
 
     updateDB = async (idToUpdate, updateToApply) => {
       const res = await this.API.put('', {
         id: idToUpdate,
-        update: { message: updateToApply },
+        message: updateToApply,
       });
       return res;
     };

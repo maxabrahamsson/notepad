@@ -11,7 +11,25 @@ consumes:
 produces:
   - application/json
 paths:
-  /note:
+  /note/{noteId}:
+    x-swagger-router-controller: note
+    delete:
+      summary: Delete a note
+      operationId: deleteNote
+      security:
+        - Bearer: []
+      parameters:
+        - in: path
+          name: noteId
+          required: true
+          type: string
+          description: Id of the note
+      responses:
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/TemplateResponse"
+  /note/:
     x-swagger-router-controller: note
     get:
       summary: Get notes
@@ -26,31 +44,7 @@ paths:
         default:
           description: Error
           schema:
-            $ref: "#/definitions/ErrorResponse"
-    delete:
-      summary: Update an existing pet
-      operationId: deleteNote
-      security:
-        - Bearer: []
-      parameters:
-        - in: body
-          name: body
-          description: Note to be removed
-          required: true
-          schema:
-            type: object
-            required:
-              - id
-            properties:
-              id:
-                type: string
-      responses:
-        "400":
-          description: Invalid ID supplied
-        "404":
-          description: Note  not found
-        "405":
-          description: Validation exception
+            $ref: "#/definitions/TemplateResponse"
     post:
       summary: Add a new note
       operationId: addNote
@@ -64,8 +58,10 @@ paths:
           schema:
             $ref: "#/definitions/Note"
       responses:
-        "405":
-          description: Invalid input
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/TemplateResponse"
     put:
       summary: Update an existing pet
       operationId: updateNote
@@ -77,14 +73,12 @@ paths:
           description: Pet object that needs to be added to the store
           required: true
           schema:
-            $ref: "#/definitions/Note"
+            $ref: "#/definitions/UpdateNote"
       responses:
-        "400":
-          description: Invalid ID supplied
-        "404":
-          description: Pet not found
-        "405":
-          description: Validation exception
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/TemplateResponse"
 securityDefinitions:
   Bearer:
     type: apiKey
@@ -107,6 +101,16 @@ definitions:
     properties:
       message:
         type: string
+  UpdateNote:
+    type: object
+    required:
+      - id
+      - message
+    properties:
+      message:
+        type: string
+      id:
+        type: string
   NotesResponse:
     type: array
     items:
@@ -121,9 +125,9 @@ definitions:
         type: string
       message:
         type: string
-  ErrorResponse:
+  TemplateResponse:
     required:
-      - message
+      - result
     properties:
-      message:
+      result:
         type: string
