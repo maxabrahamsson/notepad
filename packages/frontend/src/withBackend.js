@@ -4,36 +4,37 @@ import { API_URL } from './Config';
 
 export default function withBackend(WrappedComponent) {
   const Backend = class extends Component {
-    getDataFromDb = async () => {
-      const res = await axios.post(`${API_URL}/api/getData`, {
-        jwt: JSON.parse(localStorage.getItem('authUser')).jwt,
+    constructor() {
+      super();
+      this.API = axios.create({
+        baseURL: `${API_URL}/api/note`,
+        headers: {
+          Authorization: `Bearer ${JSON.parse(localStorage.getItem('authUser')).jwt}`,
+        },
       });
+    }
+
+    getDataFromDb = async () => {
+      const res = await this.API.get();
       return res.data;
     };
 
     putDataToDB = async (message) => {
-      const res = await axios.post(`${API_URL}/api/putData`, {
+      const res = await this.API.post('', {
         message,
-        jwt: JSON.parse(localStorage.getItem('authUser')).jwt,
       });
       return res;
     };
 
-    deleteFromDB = async (idTodelete) => {
-      const res = await axios.delete(`${API_URL}/api/deleteData`, {
-        data: {
-          _id: idTodelete,
-          jwt: JSON.parse(localStorage.getItem('authUser')).jwt,
-        },
-      });
+    deleteFromDB = async (id) => {
+      const res = await this.API.delete(`/${id}`);
       return res;
     };
 
     updateDB = async (idToUpdate, updateToApply) => {
-      const res = await axios.post(`${API_URL}/api/updateData`, {
+      const res = await this.API.put('', {
         id: idToUpdate,
-        update: { message: updateToApply },
-        jwt: JSON.parse(localStorage.getItem('authUser')).jwt,
+        message: updateToApply,
       });
       return res;
     };

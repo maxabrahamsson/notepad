@@ -1,0 +1,133 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Notepad
+host: "notepad.ahmet.se:3001"
+basePath: /api
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /note/{noteId}:
+    x-swagger-router-controller: note
+    delete:
+      summary: Delete a note
+      operationId: deleteNote
+      security:
+        - Bearer: []
+      parameters:
+        - in: path
+          name: noteId
+          required: true
+          type: string
+          description: Id of the note
+      responses:
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/TemplateResponse"
+  /note/:
+    x-swagger-router-controller: note
+    get:
+      summary: Get notes
+      operationId: getNotes
+      security:
+        - Bearer: []
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/NotesResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/TemplateResponse"
+    post:
+      summary: Add a new note
+      operationId: addNote
+      security:
+        - Bearer: []
+      parameters:
+        - in: body
+          name: body
+          description: Pet object that needs to be added to the store
+          required: true
+          schema:
+            $ref: "#/definitions/Note"
+      responses:
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/TemplateResponse"
+    put:
+      summary: Update an existing pet
+      operationId: updateNote
+      security:
+        - Bearer: []
+      parameters:
+        - in: body
+          name: body
+          description: Pet object that needs to be added to the store
+          required: true
+          schema:
+            $ref: "#/definitions/UpdateNote"
+      responses:
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/TemplateResponse"
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+    description: >
+      For accessing the API a valid JWT token must be passed in all the queries
+      in
+
+      the 'Authorization' header.
+
+
+      The following syntax must be used in the 'Authorization' header :
+          Bearer xxxxxx.yyyyyyy.zzzzzz
+definitions:
+  Note:
+    type: object
+    required:
+      - message
+    properties:
+      message:
+        type: string
+  UpdateNote:
+    type: object
+    required:
+      - id
+      - message
+    properties:
+      message:
+        type: string
+      id:
+        type: string
+  NotesResponse:
+    type: array
+    items:
+      $ref: "#/definitions/Note"
+  Response:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      type:
+        type: string
+      message:
+        type: string
+  TemplateResponse:
+    required:
+      - result
+    properties:
+      result:
+        type: string

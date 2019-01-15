@@ -1,5 +1,5 @@
 {
-  "name": "root",
+  "name": "notepad",
   "private": true,
   "devDependencies": {
     "concurrently": "^4.1.0",

@@ -105,7 +105,7 @@ class NotesPage extends Component {
 
   async refreshUI() {
     const { backend } = this.props;
-    backend.getDataFromDb().then(res => this.setState({ data: res.data }));
+    backend.getDataFromDb().then(res => this.setState({ data: res }));
   }
 }
 
